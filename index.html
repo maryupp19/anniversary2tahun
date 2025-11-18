@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Our Anniversary SUPER MASTER Cinematic</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+    margin:0;
+    font-family:"Poppins",sans-serif;
+    background: linear-gradient(135deg,#ffe6ef,#ffd4ea,#fbe9ff);
+    color:#5a2a55;
+    overflow-x:hidden;
+    position:relative;
+}
+
+/* Pages */
+.page {
+    display:none;
+    min-height:100vh;
+    padding:20px;
+    text-align:center;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    position:relative;
+}
+.page.active{
+    display:flex;
+    animation: pageFade 1s ease forwards;
+}
+
+/* Page transition */
+@keyframes pageFade{
+    0%{opacity:0; transform:scale(0.95);}
+    100%{opacity:1; transform:scale(1);}
+}
+
+/* Buttons */
+.btn {
+    background:#ff8fb1;
+    padding:14px 30px;
+    border-radius:30px;
+    border:none;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    transition:0.3s;
+    margin:20px 10px;
+}
+.btn:hover{background:#ff6c9d; transform:scale(1.05);}
+
+/* Navigation arrows */
+.nav-arrow{
+    position:fixed;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:36px;
+    color:#ff6c9d;
+    background:rgba(255,255,255,0.3);
+    border-radius:50%;
+    width:50px;
+    height:50px;
+    line-height:50px;
+    text-align:center;
+    cursor:pointer;
+    z-index:10;
+    user-select:none;
+    transition:0.3s;
+}
+.nav-arrow:hover{background:rgba(255,255,255,0.6);}
+#arrow-left{left:20px;}
+#arrow-right{right:20px;}
+
+/* Fade typing */
+.fade-line{
+    display:block;
+    opacity:0;
+    transform:translateY(20px) scale(0.95);
+    transition: all 0.8s ease-in-out;
+}
+
+/* Gallery halaman 2 */
+.gallery {
+    width:80%;
+    max-width:600px;
+    margin:30px auto;
+    position:relative;
+}
+.gallery-item{
+    position:relative;
+    margin-bottom:20px;
+    text-align:center;
+    opacity:0;
+    transform:translateY(30px) scale(0.95);
+    transition: all 1s ease;
+}
+.gallery-item img{
+    width:100%;
+    border-radius:20px;
+    box-shadow:0 10px 40px rgba(255,105,157,0.35);
+}
+
+/* Caption */
+.caption{
+    font-size:16px;
+    color:#5a2a55;
+    background:#fff0f5;
+    padding:6px 10px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(255,105,157,0.35);
+    margin-top:10px;
+    opacity:0;
+    transform: translateX(-30px) scale(0.95);
+    transition: all 1s ease;
+}
+
+/* Glow/Sparkle around gallery */
+.sparkle{
+    position:absolute;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background: radial-gradient(circle, #fff, #ff6c9d);
+    opacity:0.8;
+    pointer-events:none;
+}
+
+/* Floating icons */
+#floating-icons{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:1;
+}
+.floating-icon{
+    position:absolute;
+    font-size:16px;
+    opacity:0.6;
+    user-select:none;
+    transform:rotate(0deg) scale(1);
+    animation: floatAnim 5s linear infinite;
+}
+@keyframes floatAnim{
+    0%{transform:translateY(0) rotate(0deg);}
+    50%{transform:translateY(-100px) rotate(180deg);}
+    100%{transform:translateY(0) rotate(360deg);}
+}
+
+/* Floating text */
+#floating-texts{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:1;
+}
+.floating-text{
+    position:absolute;
+    font-size:18px;
+    font-weight:bold;
+    color:#ff6c9d;
+    text-shadow:0 0 6px #fff,0 0 12px #ff6c9d;
+    opacity:0.75;
+    user-select:none;
+    transform:rotate(0deg) scale(1);
+    animation: floatTextAnim 6s linear infinite;
+}
+@keyframes floatTextAnim{
+    0%{transform:translateY(0) rotate(0deg);}
+    50%{transform:translateY(-80px) rotate(15deg);}
+    100%{transform:translateY(0) rotate(0deg);}
+}
+
+/* Responsive */
+@media(max-width:600px){
+    .gallery{width:90%;}
+    .fade-line{font-size:16px;}
+    .caption{font-size:14px;padding:4px 6px;}
+}
+</style>
+</head>
+<body>
+
+<!-- Music -->
+<audio id="bgm" src="music.mp3" autoplay loop></audio>
+<script>
+document.addEventListener("click",()=>{
+    const audio=document.getElementById("bgm");
+    audio.volume=0.6;
+    audio.play().catch(()=>{});
+});
+</script>
+
+<!-- Floating containers -->
+<div id="floating-icons"></div>
+<div id="floating-texts"></div>
+
+<!-- Navigation arrows -->
+<div id="arrow-left" class="nav-arrow" onclick="prevPage()">&#8592;</div>
+<div id="arrow-right" class="nav-arrow" onclick="nextPageManual()">&#8594;</div>
+
+<!-- Page 1 -->
+<div id="page1" class="page active">
+    <h1 id="page1-title"></h1>
+    <p id="page1-msg"></p>
+</div>
+
+<!-- Page 2 -->
+<div id="page2" class="page">
+    <h1 id="page2-title"></h1>
+    <div class="gallery" id="gallery">
+        <div class="gallery-item">
+            <img src="foto1.jpg">
+            <div class="caption" data-text="Kamu membuatku bahagia setiap hari 💖"></div>
+        </div>
+        <div class="gallery-item">
+            <img src="foto2.jpg">
+            <div class="caption" data-text="Setiap senyummu indah ✨"></div>
+        </div>
+        <div class="gallery-item">
+            <img src="foto3.jpg">
+            <div class="caption" data-text="Bersamamu terasa sempurna 🌸"></div>
+        </div>
+        <div class="gallery-item">
+            <img src="foto4.jpg">
+            <div class="caption" data-text="Cinta kita abadi & selamanya 💫"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Page 3 -->
+<div id="page3" class="page">
+    <h1 id="page3-title"></h1>
+    <p id="page3-msg"></p>
+</div>
+
+<script>
+// Typing function
+function typeText(element,text,speed=50){
+    element.textContent="";
+    let i=0;
+    function typing(){
+        if(i<text.length){
+            element.textContent+=text.charAt(i);
+            i++;
+            setTimeout(typing,speed);
+        }
+    }
+    typing();
+}
+
+// Fade + typing lines
+function showLines(containerId,lines,delay=800){
+    let container=document.getElementById(containerId);
+    container.innerHTML="";
+    let i=0;
+    function nextLine(){
+        if(i<lines.length){
+            const span=document.createElement("span");
+            span.className="fade-line";
+            container.appendChild(span);
+            typeText(span,lines[i],50);
+            setTimeout(()=>{span.style.opacity=1; span.style.transform="translateY(0) scale(1)";},50);
+            i++;
+            setTimeout(nextLine,delay);
+        }
+    }
+    nextLine();
+}
+
+// Floating icons
+const icons=["❤️","💖","💞","✨","💌"];
+function createIcon(){
+    const icon=document.createElement("div");
+    icon.className="floating-icon";
+    icon.innerText=icons[Math.floor(Math.random()*icons.length)];
+    icon.style.left=Math.random()*100+"vw";
+    icon.style.top=Math.random()*100+"vh";
+    icon.style.fontSize=(14+Math.random()*24)+"px";
+    document.getElementById("floating-icons").appendChild(icon);
+    setTimeout(()=>icon.remove(),5000);
+}
+setInterval(createIcon,150);
+
+// Floating texts
+const floatingTexts=["I love you","❤️ Yupii","💕 Forever","✨ Always","💌 My Love"];
+function createFloatingText(){
+    const text=document.createElement("div");
+    text.className="floating-text";
+    text.innerText=floatingTexts[Math.floor(Math.random()*floatingTexts.length)];
+    text.style.left=Math.random()*100+"vw";
+    text.style.top=Math.random()*100+"vh";
+    text.style.fontSize=(16+Math.random()*24)+"px";
+    document.getElementById("floating-texts").appendChild(text);
+    setTimeout(()=>text.remove(),6000);
+}
+setInterval(createFloatingText,300);
+
+// Sparkle cinematic dramatis
+function createSparkleDramatic(parent){
+    const sparkleCount = 15;
+    for(let i=0; i<sparkleCount; i++){
+        const s = document.createElement("div");
+        s.className = "sparkle";
+        const size = 4 + Math.random()*6;
+        s.style.width = size + "px";
+        s.style.height = size + "px";
+        s.style.left = Math.random()*parent.offsetWidth + "px";
+        s.style.top = Math.random()*parent.offsetHeight + "px";
+        s.style.opacity = 0.4 + Math.random()*0.6;
+        s.style.borderRadius = "50%";
+        s.style.background = "radial-gradient(circle, #fff, #ff6c9d)";
+        s.style.position = "absolute";
+        s.style.pointerEvents = "none";
+        s.style.filter = "blur(2px)";
+
+        parent.appendChild(s);
+
+        const animTime = 2500 + Math.random()*1500;
+        s.animate([
+            {transform: `translateY(0px) scale(1) rotate(0deg)`, opacity: s.style.opacity},
+            {transform: `translateY(-60px) scale(1.3) rotate(180deg)`, opacity: 0}
+        ],{
+            duration: animTime,
+            iterations:1,
+            easing:"ease-out"
+        });
+
+        setTimeout(()=>s.remove(), animTime);
+    }
+}
+
+// Animate gallery 1 per 1, slow + sparkle dramatis
+function animateGallerySequentialDramatic(){
+    const items = document.querySelectorAll("#gallery .gallery-item");
+    let delay = 0;
+    items.forEach(item=>{
+        setTimeout(()=>{
+            item.style.opacity=1;
+            item.style.transform="translateY(0) scale(1)";
+            createSparkleDramatic(item);
+
+            const caption = item.querySelector(".caption");
+            caption.style.transform="translateX(-30px) scale(0.95)";
+            caption.style.opacity=0;
+            setTimeout(()=>{
+                caption.style.opacity=1;
+                caption.style.transform="translateX(0) scale(1)";
+                typeText(caption, caption.dataset.text,50);
+            },500);
+        },delay);
+        delay += 3500;
+    });
+}
+
+// Page navigation
+let currentPage = 1;
+const totalPages = 3;
+
+function showPage(page){
+    if(page<1) page=1;
+    if(page>totalPages) page=totalPages;
+    currentPage = page;
+    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+    const p = document.getElementById("page"+page);
+    p.classList.add("active");
+
+    if(page===1){
+        showLines("page1-title",["Happy Anniversary 2 Tahun CiiManyunnQ, Valerynaa ❤️"],800);
+        showLines("page1-msg",["Terima kasih sudah hadir dalam hidup aku,","menjadi rumah terhangat,","dan menjadi alasan aku tersenyum setiap harinya."],800);
+    }
+    if(page===2){
+        showLines("page2-title",["DAMMAR & VALERYNA ✨💖"],800);
+        animateGallerySequentialDramatic();
+    }
+    if(page===3){
+        showLines("page3-title",["My Message for You 💕"],800);
+        showLines("page3-msg",[
+            "Aku bersyukur setiap hari karena kamu selalu ada disampingQ.",
+            "Dua tahun ini terasa indah karena kamu selalu ada.",
+            "Semoga kita selalu bersama, saling menggenggam, saling menjaga, dan saling mencintai untuk selamanya.",
+            "I love youuu selangitt #CiiManyuunnQ. ❤️"
+        ],800);
+    }
+}
+
+function nextPageManual(){ showPage(currentPage+1); }
+function prevPage(){ showPage(currentPage-1); }
+
+// Keyboard navigation
+document.addEventListener("keydown",function(e){
+    if(e.key==="ArrowRight") nextPageManual();
+    if(e.key==="ArrowLeft") prevPage();
+});
+
+// Initial load
+window.addEventListener("load",()=>{ showPage(1); });
+</script>
+</body>
+</html>
