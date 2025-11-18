@@ -24,6 +24,7 @@ body {
     align-items:center;
     flex-direction:column;
     position:relative;
+    z-index:1; /* Konten utama di atas efek floating */
 }
 .page.active{
     display:flex;
@@ -64,7 +65,7 @@ body {
     line-height:50px;
     text-align:center;
     cursor:pointer;
-    z-index:10;
+    z-index:10; /* tetap di atas semua */
     user-select:none;
     transition:0.3s;
 }
@@ -126,7 +127,7 @@ body {
     pointer-events:none;
 }
 
-/* Floating icons */
+/* Floating icons (di belakang konten) */
 #floating-icons{
     position:fixed;
     top:0;
@@ -134,7 +135,7 @@ body {
     width:100%;
     height:100%;
     pointer-events:none;
-    z-index:1;
+    z-index:0; /* di bawah konten utama */
 }
 .floating-icon{
     position:absolute;
@@ -150,7 +151,7 @@ body {
     100%{transform:translateY(0) rotate(360deg);}
 }
 
-/* Floating text */
+/* Floating text (di belakang konten) */
 #floating-texts{
     position:fixed;
     top:0;
@@ -158,7 +159,7 @@ body {
     width:100%;
     height:100%;
     pointer-events:none;
-    z-index:1;
+    z-index:0; /* di bawah konten utama */
 }
 .floating-text{
     position:absolute;
@@ -403,4 +404,4 @@ document.addEventListener("keydown",function(e){
 window.addEventListener("load",()=>{ showPage(1); });
 </script>
 </body>
-</html>
+</html> 
